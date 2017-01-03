@@ -14,6 +14,15 @@ public class JapCounter {
     public ArrayList<JapWord> onetoten;
     public ArrayList<JapWord> examples;
 
+
+    public JapCounter() {
+        this.examples = null;
+        this.icon = null;
+        this.name = null;
+        this.onetoten = null;
+        this.uses = null;
+    }
+
     public JapCounter(ArrayList<JapWord> examples, String icon, Word name, ArrayList<JapWord> onetoten, ArrayList<String> uses) {
         this.examples = examples;
         this.icon = icon;
@@ -27,6 +36,14 @@ public class JapCounter {
         this.icon = null;
         this.name = name;
         this.onetoten = onetoten;
+        this.uses = uses;
+    }
+
+    public JapCounter(Word name, ArrayList<String> uses) {
+        this.examples = null;
+        this.icon = null;
+        this.name = name;
+        this.onetoten = null;
         this.uses = uses;
     }
 
