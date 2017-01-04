@@ -6,9 +6,33 @@ package io.origamicoders.japcounter.Classes;
 
 public class Word {
 
-    public String kanji;
-    public String kana;
-    public String romaji;
+    protected String kanji;
+    protected String kana;
+    protected String romaji;
+
+    public String getKanji() {
+        return kanji;
+    }
+
+    public void setKanji(String kanji) {
+        this.kanji = kanji;
+    }
+
+    public String getKana() {
+        return kana;
+    }
+
+    public void setKana(String kana) {
+        this.kana = kana;
+    }
+
+    public String getRomaji() {
+        return romaji;
+    }
+
+    public void setRomaji(String romaji) {
+        this.romaji = romaji;
+    }
 
     public Word(String kana, String kanji, String romaji) {
         this.kana = kana;

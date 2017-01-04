@@ -8,6 +8,10 @@ public class JapWord extends Word {
 
     public String english;
 
+    public String getKanji(){
+        return this.kanji;
+    }
+
     public JapWord(String kana, String kanji, String romaji, String english) {
         this.english = english;
         this.kana = kana;
