@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Data {
 
     public static ArrayList<JapCounter> japCounters = new ArrayList<>();
-    private static ArrayList<JapCounter> getJapCounters(){
+    public static ArrayList<JapCounter> getJapCounters(){
         ArrayList<JapCounter> japCounters = new ArrayList<>();
 
         Header header1 = new Header("Living Things");
@@ -29,6 +29,16 @@ public class Data {
 
 
         JapCounter jap = new JapCounter(nin, uses);
+        jap.addonetoten(new JapWord("ひとり", "一人", "hitori", "1"));
+        jap.addonetoten(new JapWord("ふたり", "二人", "futari", "2"));
+        jap.addonetoten(new JapWord("さんにん", "三人", "sannin", "3"));
+        jap.addonetoten(new JapWord("よにん", "四人", "yonin", "4"));
+        jap.addonetoten(new JapWord("ごにん", "五人", "gonin", "5"));
+        jap.addonetoten(new JapWord("ろくにん", "六人", "rokunin", "6"));
+        jap.addonetoten(new JapWord("しちにん", "七人", "shichinin", "7"));
+        jap.addonetoten(new JapWord("はちにん", "八人", "hachinin", "8"));
+        jap.addonetoten(new JapWord("きゅうにん", "九人", "kyuunin", "9"));
+        jap.addonetoten(new JapWord("じゅうにん", "十人", "juunin", "10"));
         JapCounter jap2 = new JapCounter(tsu, tsu_uses);
         JapCounter jap3 = new JapCounter(kai, kai_uses);
 
@@ -112,7 +122,7 @@ public class Data {
             case 9:
                 res.add("九");
                 res.add("きゅう");
-                res.add("kyuu/ku");
+                res.add("kyuu");
                 return res;
             case 10:
                 res.add("十");

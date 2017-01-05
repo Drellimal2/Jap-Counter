@@ -1,5 +1,6 @@
 package io.origamicoders.japcounter;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class HundredActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private ArrayList<JapWord> japnums = new ArrayList<>();
-
+    public static FragmentManager frag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +40,16 @@ public class HundredActivity extends AppCompatActivity {
         japnums = Data.getNumbers();
         NumberAdapter mAdapter = new NumberAdapter(japnums);
         mRecyclerView.setAdapter(mAdapter);
-
+        frag = getSupportFragmentManager();
 //        // Get a support ActionBar corresponding to this toolbar
-//        ActionBar ab = getSupportActionBar();
-//
-//        // Enable the Up button
-//        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar ab = getSupportActionBar();
 
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    public static FragmentManager getFrag(){
+        return frag;
     }
 }

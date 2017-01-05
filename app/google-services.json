@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "642548944501",
+    "firebase_url": "https://tsu-japanese-counter.firebaseio.com",
+    "project_id": "tsu-japanese-counter",
+    "storage_bucket": "tsu-japanese-counter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642548944501:android:3ca1c06bce3c9f94",
+        "android_client_info": {
+          "package_name": "io.origamicoders.japcounter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642548944501-agj90dkcoecdlhr4cn3jj1a3dobm620o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPxqjQFW9OQj_d2IGbzjWTt5ndPzzN5BY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

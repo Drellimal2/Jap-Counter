@@ -5,4 +5,8 @@ package io.origamicoders.japcounter.Classes.Quiz;
  */
 
 public class QuizGenerator {
+
+
+
+
 }

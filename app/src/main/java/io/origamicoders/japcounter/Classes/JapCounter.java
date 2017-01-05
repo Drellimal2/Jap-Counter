@@ -23,6 +23,30 @@ public class JapCounter {
         this.uses = null;
     }
 
+    public String usesToString(){
+        String useslist = this.uses.get(0);
+
+        int s = this.uses.size();
+        if (s > 1) {
+            for (String use : this.uses.subList(1, s)) {
+                useslist = useslist.concat(", " + use);
+            }
+        }
+        return useslist;
+    }
+
+    public String usesToList(){
+        String useslist = "• " + this.uses.get(0);
+
+        int s = this.uses.size();
+        if (s > 1) {
+            for (String use : this.uses.subList(1, s)) {
+                useslist = useslist.concat("\n• " + use);
+            }
+        }
+        return useslist;
+    }
+
     public JapCounter(ArrayList<JapWord> examples, String icon, Word name, ArrayList<JapWord> onetoten, ArrayList<String> uses) {
         this.examples = examples;
         this.icon = icon;
@@ -32,7 +56,7 @@ public class JapCounter {
     }
 
     public JapCounter(Word name, ArrayList<JapWord> onetoten, ArrayList<String> uses) {
-        this.examples = null;
+        this.examples = new ArrayList<>();;
         this.icon = null;
         this.name = name;
         this.onetoten = onetoten;
@@ -40,11 +64,15 @@ public class JapCounter {
     }
 
     public JapCounter(Word name, ArrayList<String> uses) {
-        this.examples = null;
+        this.examples = new ArrayList<>();
         this.icon = null;
         this.name = name;
-        this.onetoten = null;
+        this.onetoten = new ArrayList<>();
         this.uses = uses;
+    }
+
+    public void addonetoten(JapWord j){
+        this.onetoten.add(j);
     }
 
 }

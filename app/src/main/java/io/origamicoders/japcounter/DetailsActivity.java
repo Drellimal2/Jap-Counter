@@ -1,8 +1,8 @@
 package io.origamicoders.japcounter;
 
+import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,57 +19,54 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
+import io.origamicoders.japcounter.Classes.Data;
+import io.origamicoders.japcounter.Classes.JapCounter;
+
 public class DetailsActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private Toolbar toolbar;
+    private AppBarLayout appBarLayout;
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_details);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
+        Intent i = getIntent();
+        int item_pos = i.getIntExtra("ITEM_POS", 0);
+
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), item_pos);
+
+
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        JapCounter a = Data.getJapCounters().get(item_pos);
+        getSupportActionBar().setTitle(a.name.getKanji() + " - " + a.usesToString());
+
 
     }
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_details, menu);
         return true;
     }
@@ -89,9 +86,7 @@ public class DetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+
     public static class PlaceholderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
@@ -106,10 +101,11 @@ public class DetailsActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public static PlaceholderFragment newInstance(int sectionNumber, int pos) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putInt("POS", pos);
             fragment.setArguments(args);
             return fragment;
         }
@@ -117,28 +113,67 @@ public class DetailsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_details, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            int a = getArguments().getInt(ARG_SECTION_NUMBER);
+            int pos = getArguments().getInt("POS");
+            View rootView;
+            switch(a-1){
+                case 0:
+                    rootView = inflater.inflate(R.layout.fragment_details_desc, container, false);
+
+                    MobileAds.initialize(rootView.getContext(), "ca-app-pub-3940256099942544~3347511713");
+                    AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+                    AdRequest adRequest = new AdRequest.Builder().build();
+                    mAdView.loadAd(adRequest);
+                    JapCounter japCounter = Data.getJapCounters().get(pos);
+                    TextView kanji = (TextView) rootView.findViewById(R.id.counter_details_desc_kanji);
+                    TextView kana = (TextView) rootView.findViewById(R.id.counter_details_desc_kana);
+                    TextView uses = (TextView) rootView.findViewById(R.id.counter_details_desc_uses);
+                    TextView romaji = (TextView) rootView.findViewById(R.id.counter_details_desc_romaji);
+
+                    kanji.setText(japCounter.name.getKanji());
+                    kana.setText(japCounter.name.getKana());
+                    romaji.setText(japCounter.name.getRomaji());
+                    uses.setText(japCounter.usesToList());
+                    break;
+                case 1:
+                    rootView = inflater.inflate(R.layout.fragment_details_toten, container, false);
+                    break;
+                case 2:
+                    rootView = inflater.inflate(R.layout.fragment_details_examples, container, false);
+                    break;
+                default:
+                    rootView = inflater.inflate(R.layout.fragment_details_desc, container, false);
+                    break;
+
+            }
+
             return rootView;
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        int pos;
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+        }
+        public SectionsPagerAdapter(FragmentManager fm, int pos) {
+            super(fm);
+            this.pos = pos;
         }
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch(position){
+                case 0:
+                    return CounterDetailDesc.newInstance(0, this.pos);
+                case 1:
+                    return CounterDetailToTen.newInstance(1, this.pos);
+                default:
+                    return PlaceholderFragment.newInstance(position + 1, this.pos);
+            }
         }
 
         @Override
@@ -151,11 +186,11 @@ public class DetailsActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Description";
                 case 1:
-                    return "SECTION 2";
+                    return "1 to 10";
                 case 2:
-                    return "SECTION 3";
+                    return "Examples";
             }
             return null;
         }
