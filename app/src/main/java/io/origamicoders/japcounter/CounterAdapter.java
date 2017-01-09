@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,10 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
         // each data item is just a string in this case
         public View mView;
 
+        public void clearAnimation()
+        {
+            mView.clearAnimation();
+        }
 
         public ViewHolder(View v) {
             super(v);
@@ -63,12 +69,10 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
     }
 
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public CounterAdapter(ArrayList<JapCounter> myDataset) {
         mDataset = myDataset;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public CounterAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
@@ -79,7 +83,7 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
                     .inflate(R.layout.header_list_item, parent, false);
         } else {
             v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.counter_list_item_2, parent, false);
+                    .inflate(R.layout.counter_list_item, parent, false);
         }
 
         // set the view's size, margins, paddings and layout parameters
@@ -87,7 +91,6 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
@@ -101,7 +104,7 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
             TextView kana = (TextView) holder.mView.findViewById(R.id.counter_list_item_kana);
             TextView romaji = (TextView) holder.mView.findViewById(R.id.counter_list_item_romaji);
             TextView uses = (TextView) holder.mView.findViewById(R.id.counter_list_item_info_text);
-            ImageView icon = (ImageView) holder.mView.findViewById(R.id.counter_list_item_icon);
+//            ImageView icon = (ImageView) holder.mView.findViewById(R.id.counter_list_item_icon);
 
 
             JapCounter item= mDataset.get(position);
@@ -119,10 +122,22 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
             }
             uses.setText(useslist);
         }
+        setAnimation(holder.mView, position);
+
 
     }
+    private int lastPosition = -1;
 
-    // Return the size of your dataset (invoked by the layout manager)
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
     @Override
     public int getItemCount() {
         return mDataset.size();
@@ -133,5 +148,11 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
         int res = mDataset.get(position) instanceof Header ? 1 : 2;
         return res;
     }
-    
+
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        ((CounterAdapter.ViewHolder)holder).clearAnimation();
+    }
+
+
 }

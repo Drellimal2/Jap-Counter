@@ -1,5 +1,6 @@
 package io.origamicoders.japcounter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,13 +20,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import io.origamicoders.japcounter.Classes.Data;
 import io.origamicoders.japcounter.Classes.JapCounter;
+import io.origamicoders.japcounter.Models.Counter;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -33,6 +43,9 @@ public class DetailsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
     private ViewPager mViewPager;
+    private Counter counter;
+    private FirebaseDatabase mDatabase;
+    private String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +60,54 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         int item_pos = i.getIntExtra("ITEM_POS", 0);
+        key = i.getStringExtra("ITEM_KEY");
+
+        mDatabase = Utils.getDatabase();
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), item_pos);
-
-
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        getCounter();
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         JapCounter a = Data.getJapCounters().get(item_pos);
-        getSupportActionBar().setTitle(a.name.getKanji() + " - " + a.usesToString());
+//        getSupportActionBar().setTitle(a.name.getKanji() + " - " + a.usesToString());
 
 
     }
 
+    public Counter getCounter(){
+        if (counter == null) {
+            Query query = mDatabase.getReference().child("counters").child(key);
+            ValueEventListener valueEventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    counter = dataSnapshot.getValue(Counter.class);
+                    retcounter(counter);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e("DETAILS", "Details General");
+                }
+            };
+
+            query.addListenerForSingleValueEvent(valueEventListener);
+        }
+        return this.counter;
+
+
+    }
+
+    public Counter retcounter(Counter coun){
+        this.counter =  coun;
+        Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
+        getSupportActionBar().setTitle(coun.kanji + " - " + coun.uses);
+
+        return this.counter;
+    }
 
 
     @Override
@@ -164,16 +209,17 @@ public class DetailsActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+
             switch(position){
                 case 0:
-                    return CounterDetailDesc.newInstance(0, this.pos);
+                    return CounterDetailDesc.newInstance(key, this.pos);
                 case 1:
-                    return CounterDetailToTen.newInstance(1, this.pos);
-                default:
-                    return PlaceholderFragment.newInstance(position + 1, this.pos);
+                    return CounterDetailToTen.newInstance(key, this.pos);
+                case 2:
+                    return CounterDetailExamples.newInstance(2, this.pos);
             }
+            return PlaceholderFragment.newInstance(position + 1, this.pos);
+
         }
 
         @Override

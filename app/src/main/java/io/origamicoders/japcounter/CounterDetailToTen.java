@@ -7,17 +7,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 
 import io.origamicoders.japcounter.Classes.Data;
 import io.origamicoders.japcounter.Classes.JapCounter;
 import io.origamicoders.japcounter.Classes.JapWord;
+import io.origamicoders.japcounter.Models.Counter;
+import io.origamicoders.japcounter.Models.Example;
+import io.origamicoders.japcounter.ViewHolders.CounterViewHolder;
+import io.origamicoders.japcounter.ViewHolders.UsageViewHolder;
 
 /**
  * Created by DM036497 on 1/4/2017.
@@ -28,10 +38,11 @@ public class CounterDetailToTen extends Fragment {
     public CounterDetailToTen(){
     }
 
-    public static CounterDetailToTen newInstance(int sectionNumber, int pos) {
+    public static CounterDetailToTen newInstance(String key, int pos) {
         CounterDetailToTen fragment = new CounterDetailToTen();
         Bundle args = new Bundle();
         args.putInt("POS", pos);
+        args.putString("ITEM_KEY", key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,7 +54,7 @@ public class CounterDetailToTen extends Fragment {
         int pos = getArguments().getInt("POS");
         View rootView;
         JapCounter japCounter = Data.getJapCounters().get(pos);
-
+        final String key = getArguments().getString("ITEM_KEY");
         rootView = inflater.inflate(R.layout.fragment_recycler_ads, container, false);
 
         MobileAds.initialize(rootView.getContext(), "ca-app-pub-3940256099942544~3347511713");
@@ -52,29 +63,30 @@ public class CounterDetailToTen extends Fragment {
         mAdView.loadAd(adRequest);
         final DetailsActivity detail = (DetailsActivity) getActivity();
         RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.gen_recycler_view);
-        /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy < 0) {
-                    // Scrolling up
-                    detail.showToolbar();
-                } else {
-                    // Scrolling down
-                    detail.hideToolbar();
-                }
-            }
-        });*/
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
+        DatabaseReference mDatabase = Utils.getDatabase().getReference();
         // specify an adapter (see also next example)
-        MyAdapter mAdapter = new MyAdapter(japCounter.onetoten);
+//        MyAdapter mAdapter = new MyAdapter(japCounter.onetoten);
+        final Query counterQuery = mDatabase.child("samples").child(key);
+
+        FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Example, UsageViewHolder>(Example.class,
+                R.layout.fragment_details_toten, UsageViewHolder.class, counterQuery){
+
+
+            @Override
+            protected void populateViewHolder(UsageViewHolder viewHolder, Example model, int position) {
+
+                viewHolder.bindToUse(model, position, key);
+            }
+
+
+
+        };
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -85,9 +97,7 @@ public class CounterDetailToTen extends Fragment {
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private ArrayList<JapWord> mDataset;
 
-        // Provide a reference to the views for each data item
-        // Complex data items may need more than one view per item, and
-        // you provide access to all the views for a data item in a view holder
+
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
             public View mView;
@@ -120,6 +130,18 @@ public class CounterDetailToTen extends Fragment {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             JapWord japWord = mDataset.get(position);
+            View v = holder.mView;
+//            TextView kanji = (TextView) v.findViewById(R.id.counter_details_toten_kanji);
+//            TextView kana = (TextView) v.findViewById(R.id.counter_details_toten_kana);
+//            TextView romaji = (TextView) v.findViewById(R.id.counter_details_toten_romaji);
+//            TextView eng = (TextView) v.findViewById(R.id.counter_details_toten_english);
+
+//            kanji.setText(japWord.getKanji());
+//            kana.setText(japWord.getKana());
+//            romaji.setText(japWord.getRomaji());
+//            eng.setText(japWord.english);
+
+
         }
 
         // Return the size of your dataset (invoked by the layout manager)

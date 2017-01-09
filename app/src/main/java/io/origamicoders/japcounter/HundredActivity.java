@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 
 import io.origamicoders.japcounter.Classes.Data;
-import io.origamicoders.japcounter.Classes.JapCounter;
 import io.origamicoders.japcounter.Classes.JapWord;
 
 public class HundredActivity extends AppCompatActivity {
@@ -23,7 +22,7 @@ public class HundredActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_counters);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);

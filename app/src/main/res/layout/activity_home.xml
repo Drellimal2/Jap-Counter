@@ -23,33 +23,29 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:text="Counters"
         android:background="@color/white"
         android:gravity="center"
         android:id="@+id/home_counter_button"
-        android:layout_margin="5dp"
+        android:layout_margin="15dp"
         />
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Numbers - 1 to 100"
+        android:layout_height="80dp"
+        android:text="Numbers"
         android:background="@color/white"
         android:id="@+id/home_hundred_button"
         android:gravity="center"
-        android:layout_margin="5dp"/>
+        android:layout_margin="15dp"/>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:text="Quiz"
         android:id="@+id/home_quiz_button"
-        android:background="@color/white"
+        android:background="@drawable/quiz_button"
         android:gravity="center"
-        android:layout_margin="5dp"/>
-
-
-
-
+        android:layout_margin="15dp"/>
 </LinearLayout>

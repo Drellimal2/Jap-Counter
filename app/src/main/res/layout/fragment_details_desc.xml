@@ -39,9 +39,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:textSize="15sp"
+                        android:textAllCaps="true"
+                        android:text="General"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
                         android:textSize="45sp"
                         android:id="@+id/counter_details_desc_kanji"
                         android:gravity="center"
+                        android:fontFamily="ja"
                         android:text="T"/>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -125,9 +135,9 @@
 
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:textSize="20sp"
                             android:text="Kana :"
                             android:id="@+id/counter_details_desc_uses"

@@ -1,5 +1,6 @@
 package io.origamicoders.japcounter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -9,49 +10,93 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import io.origamicoders.japcounter.Classes.Data;
 import io.origamicoders.japcounter.Classes.Header;
 import io.origamicoders.japcounter.Classes.JapCounter;
 import io.origamicoders.japcounter.Classes.Word;
+import io.origamicoders.japcounter.Models.Counter;
+import io.origamicoders.japcounter.ViewHolders.CounterViewHolder;
 
-public class MainActivity extends AppCompatActivity {
+public class CountersActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private ArrayList<JapCounter> japCounters = new ArrayList<>();
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_counters);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
-        getData();
-        CounterAdapter mAdapter = new CounterAdapter(japCounters);
+//        japCounters = getData();
+
+        mDatabase = Utils.getDatabase().getReference();
+        final Context a = this;
+        final Query counterQuery = mDatabase.child("counters");
+        FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Counter, CounterViewHolder>(Counter.class,
+                R.layout.counter_list_item, CounterViewHolder.class, counterQuery){
+
+
+            @Override
+            protected void populateViewHolder(CounterViewHolder viewHolder, Counter model, int position) {
+                final DatabaseReference postRef = getRef(position);
+
+                // Set click listener for the whole post view
+                final String postKey = postRef.getKey();
+                viewHolder.bindToCounter(model, position, postKey);
+                long id = getItemId(position);
+
+                setAnimation(viewHolder.mView, position);
+
+
+            }
+            private int lastPosition = -1;
+
+            private void setAnimation(View viewToAnimate, int position)
+            {
+
+                if (position > lastPosition)
+                {
+                    Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.slide_in_left);
+                    viewToAnimate.startAnimation(animation);
+                    lastPosition = position;
+                }
+            }
+
+        };
         mRecyclerView.setAdapter(mAdapter);
 
-        // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
 
-        // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
 
     }
@@ -97,44 +142,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getData(){
-        Header header1 = new Header("Living Things");
-        Word nin = new Word("にん", "人",  "nin");
-        ArrayList<String> uses = new ArrayList<>();
-        uses.add(0, "People");
-
-        Word tsu = new Word("つ","つ","tsu");
-        ArrayList<String> tsu_uses = new ArrayList<>();
-        tsu_uses.add("General");
-        tsu_uses.add("Things");
-
-        Word kai = new Word("かい", "階", "kai");
-        ArrayList<String> kai_uses = new ArrayList<>();
-        kai_uses.add("Number of Floors");
-        kai_uses.add("Stories");
-
-
-        JapCounter jap = new JapCounter(nin, uses);
-        JapCounter jap2 = new JapCounter(tsu, tsu_uses);
-        JapCounter jap3 = new JapCounter(kai, kai_uses);
-
-        for (int i = 0; i<30; i++){
-            if ( i % 5 == 0){
-                japCounters.add(header1);
-            }
-            switch(i%3){
-                case 0:
-                    japCounters.add(jap);
-                    break;
-                case 1:
-                    japCounters.add(jap2);
-                    break;
-                case 2:
-                    japCounters.add(jap3);
-            }
-
-        }
-
+    private ArrayList<JapCounter> getData(){
+        return Data.getJapCounters();
     }
+
+
 
 }

@@ -75,4 +75,8 @@ public class JapCounter {
         this.onetoten.add(j);
     }
 
+    public void addexample(JapWord j){
+        this.examples.add(j);
+    }
+
 }
