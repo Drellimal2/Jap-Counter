@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 
-import io.origamicoders.japcounter.Classes.Data;
 import io.origamicoders.japcounter.Classes.JapWord;
 
 public class HundredActivity extends AppCompatActivity {

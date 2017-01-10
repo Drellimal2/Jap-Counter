@@ -1,26 +1,25 @@
 package io.origamicoders.japcounter;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import io.origamicoders.japcounter.Classes.Data;
 import io.origamicoders.japcounter.Classes.JapCounter;
 import io.origamicoders.japcounter.Models.Counter;
 
@@ -33,6 +32,7 @@ public class CounterDetailDesc extends Fragment {
     private TextView kana;
     private TextView uses;
     private TextView romaji;
+    private CheckBox like;
     public CounterDetailDesc(){
     }
     private DetailsActivity mActivity;
@@ -50,7 +50,7 @@ public class CounterDetailDesc extends Fragment {
                              Bundle savedInstanceState) {
 
         int pos = getArguments().getInt("POS");
-        String key = getArguments().getString("ITEM_KEY");
+        final String key = getArguments().getString("ITEM_KEY");
 
 
         View rootView = inflater.inflate(R.layout.fragment_details_desc, container, false);
@@ -66,8 +66,24 @@ public class CounterDetailDesc extends Fragment {
         kana = (TextView) rootView.findViewById(R.id.counter_details_desc_kana);
         uses = (TextView) rootView.findViewById(R.id.counter_details_desc_uses);
         romaji = (TextView) rootView.findViewById(R.id.counter_details_desc_romaji);
-        FirebaseDatabase mDatabase = Utils.getDatabase();
-        Query query = mDatabase.getReference().child("counters").child(key);
+        like = (CheckBox) rootView.findViewById(R.id.counter_details_desc_like);
+        final DatabaseReference mDatabase = Utils.getDatabase().getReference();
+
+        Query query = mDatabase.child("counters").child(key);
+        final FirebaseUser user = Utils.getCurrentUser();
+        ValueEventListener likelistener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() != null) {
+                    like.setChecked(Boolean.parseBoolean(dataSnapshot.getValue().toString()));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -76,19 +92,31 @@ public class CounterDetailDesc extends Fragment {
                 kanji.setText(counter.kanji);
                 kana.setText(counter.kana);
                 romaji.setText(counter.romaji);
-                uses.setText(counter.uses);
+                uses.setText(Utils.usesToStringList(counter.uses));
+
+                like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        mDatabase.child("user_favorites").child(user.getUid()).child(key).setValue(b);
+                    }
+                });
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("DETAILS", "Details General");
             }
+
+
         };
+        Query likequery = mDatabase.child("user_favorites").child(user.getUid()).child(key);
+        likequery.addListenerForSingleValueEvent(likelistener);
+
 
         query.addListenerForSingleValueEvent(valueEventListener);
         mActivity = (DetailsActivity) getActivity();
 
-        Toast.makeText(mActivity, "Ok", Toast.LENGTH_LONG).show();
         return rootView;
     }
 

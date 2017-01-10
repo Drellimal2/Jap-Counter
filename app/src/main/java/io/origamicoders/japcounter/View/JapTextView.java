@@ -30,7 +30,9 @@ public class JapTextView extends TextView {
     }
 
     private void applyCustomFont(Context context) {
-        Typeface customFont = Utils.getTypeface("Noto-Thin.ttf", context);
+//        Typeface customFont = Utils.getTypeface("JKG.ttf", context);
+//        Typeface customFont = Utils.getTypeface("LTG.ttf", context);
+        Typeface customFont = Utils.getTypeface("honokamin.ttf", context);
         setTypeface(customFont);
     }
 }

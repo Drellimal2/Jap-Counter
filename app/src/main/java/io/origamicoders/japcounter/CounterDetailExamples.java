@@ -15,7 +15,6 @@ import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 
-import io.origamicoders.japcounter.Classes.Data;
 import io.origamicoders.japcounter.Classes.JapCounter;
 import io.origamicoders.japcounter.Classes.JapWord;
 

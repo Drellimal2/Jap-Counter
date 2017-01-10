@@ -6,6 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseUser;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -25,5 +28,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        FirebaseUser user = Utils.getCurrentUser();
+        Toast.makeText(this, user.getUid(), Toast.LENGTH_LONG).show();
     }
 }

@@ -2,10 +2,7 @@ package io.origamicoders.japcounter.Classes;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -15,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import io.origamicoders.japcounter.Data;
 import io.origamicoders.japcounter.R;
 
 

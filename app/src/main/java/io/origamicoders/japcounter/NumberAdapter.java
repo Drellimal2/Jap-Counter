@@ -87,7 +87,7 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.ViewHolder
                     AppCompatDialogFragment a = NumberDetails.newInstance(i);
                     HundredActivity hun = (HundredActivity) mView.getContext();
                     Toast.makeText(mView.getContext(), item, Toast.LENGTH_LONG).show();
-                    FragmentManager  frag = hun.frag;
+                    FragmentManager  frag = HundredActivity.frag;
                     a.show(frag, "a");
 
                 }

@@ -7,26 +7,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 
-import io.origamicoders.japcounter.Classes.Data;
 import io.origamicoders.japcounter.Classes.JapCounter;
 import io.origamicoders.japcounter.Classes.JapWord;
-import io.origamicoders.japcounter.Models.Counter;
 import io.origamicoders.japcounter.Models.Example;
-import io.origamicoders.japcounter.ViewHolders.CounterViewHolder;
 import io.origamicoders.japcounter.ViewHolders.UsageViewHolder;
 
 /**
@@ -75,7 +68,7 @@ public class CounterDetailToTen extends Fragment {
         final Query counterQuery = mDatabase.child("samples").child(key);
 
         FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Example, UsageViewHolder>(Example.class,
-                R.layout.fragment_details_toten, UsageViewHolder.class, counterQuery){
+                R.layout.fragment_details_samples, UsageViewHolder.class, counterQuery){
 
 
             @Override
@@ -118,7 +111,7 @@ public class CounterDetailToTen extends Fragment {
                                                        int viewType) {
             // create a new view
             View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.fragment_details_toten, parent, false);
+                    .inflate(R.layout.fragment_details_samples, parent, false);
             // set the view's size, margins, paddings and layout parameters
             ViewHolder vh = new ViewHolder(v);
             return vh;

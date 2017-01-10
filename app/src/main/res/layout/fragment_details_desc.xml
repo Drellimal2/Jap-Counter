@@ -35,8 +35,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="10dp">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:textSize="15sp"
@@ -44,14 +49,22 @@
                         android:text="General"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold"/>
-                    <TextView
+                        <CheckBox
+                            android:id="@+id/counter_details_desc_like"
+                            android:layout_width="35dp"
+                            android:button="@drawable/like_checkbox"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            />
+                    </LinearLayout>
+                    <io.origamicoders.japcounter.View.JapTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:textSize="45sp"
                         android:id="@+id/counter_details_desc_kanji"
                         android:gravity="center"
-                        android:fontFamily="ja"
                         android:text="T"/>
                     <LinearLayout
                         android:layout_width="match_parent"

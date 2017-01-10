@@ -56,7 +56,7 @@ public class JapCounter {
     }
 
     public JapCounter(Word name, ArrayList<JapWord> onetoten, ArrayList<String> uses) {
-        this.examples = new ArrayList<>();;
+        this.examples = new ArrayList<>();
         this.icon = null;
         this.name = name;
         this.onetoten = onetoten;

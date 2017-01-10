@@ -1,6 +1,5 @@
 package io.origamicoders.japcounter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -27,12 +26,10 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import io.origamicoders.japcounter.Classes.Data;
 import io.origamicoders.japcounter.Classes.JapCounter;
 import io.origamicoders.japcounter.Models.Counter;
 
@@ -77,7 +74,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
-    public Counter getCounter(){
+    public Counter getCounter() {
         if (counter == null) {
             Query query = mDatabase.getReference().child("counters").child(key);
             ValueEventListener valueEventListener = new ValueEventListener() {
@@ -101,8 +98,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
-    public Counter retcounter(Counter coun){
-        this.counter =  coun;
+    public Counter retcounter(Counter coun) {
+        this.counter = coun;
         Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
         getSupportActionBar().setTitle(coun.kanji + " - " + coun.uses);
 
@@ -161,7 +158,7 @@ public class DetailsActivity extends AppCompatActivity {
             int a = getArguments().getInt(ARG_SECTION_NUMBER);
             int pos = getArguments().getInt("POS");
             View rootView;
-            switch(a-1){
+            switch (a - 1) {
                 case 0:
                     rootView = inflater.inflate(R.layout.fragment_details_desc, container, false);
 
@@ -181,7 +178,7 @@ public class DetailsActivity extends AppCompatActivity {
                     uses.setText(japCounter.usesToList());
                     break;
                 case 1:
-                    rootView = inflater.inflate(R.layout.fragment_details_toten, container, false);
+                    rootView = inflater.inflate(R.layout.fragment_details_samples, container, false);
                     break;
                 case 2:
                     rootView = inflater.inflate(R.layout.fragment_details_examples, container, false);
@@ -199,9 +196,11 @@ public class DetailsActivity extends AppCompatActivity {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         int pos;
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
         public SectionsPagerAdapter(FragmentManager fm, int pos) {
             super(fm);
             this.pos = pos;
@@ -210,7 +209,7 @@ public class DetailsActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
 
-            switch(position){
+            switch (position) {
                 case 0:
                     return CounterDetailDesc.newInstance(key, this.pos);
                 case 1:

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -151,7 +150,7 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
 
     @Override
     public void onViewDetachedFromWindow(ViewHolder holder) {
-        ((CounterAdapter.ViewHolder)holder).clearAnimation();
+        holder.clearAnimation();
     }
 
 
