@@ -92,9 +92,7 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-//        holder.mView.setText(mDataset.get(position).name.kana);
+
         if (getItemViewType(position) == 1){
             TextView headerTitle = (TextView) holder.mView.findViewById(R.id.header_list_item_tv);
             headerTitle.setText(((Header) mDataset.get(position)).title);

@@ -1,5 +1,7 @@
 package io.origamicoders.japcounter;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import io.origamicoders.japcounter.Classes.Header;
@@ -14,6 +16,7 @@ import io.origamicoders.japcounter.Classes.Word;
 public class Data {
 
     public static ArrayList<JapCounter> japCounters = new ArrayList<>();
+    public static ArrayList<JapWord> nums = new ArrayList<>();
 
     public static ArrayList<JapCounter> getJapCounters(){
         System.out.println(Data.japCounters.size());
@@ -1745,6 +1748,10 @@ public class Data {
     }
 
     public static ArrayList<JapWord> getNumbers(){
+        if (Data.nums.size() != 0 ){
+            Log.e("Nums","Nums woo");
+            return Data.nums;
+        }
         ArrayList<JapWord> Numbers = new ArrayList<>();
         for( int i = 1; i <100; i++){
             int start = i /10;
@@ -1805,7 +1812,7 @@ public class Data {
 
         }
         Numbers.add(new JapWord("ひゃく","百","hyaku", "100"));
-
+        Data.nums = Numbers;
         return Numbers;
 
     }

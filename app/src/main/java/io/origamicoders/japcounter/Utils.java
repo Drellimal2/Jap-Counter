@@ -17,10 +17,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import io.origamicoders.japcounter.Models.Counter;
+
 /**
  * Created by DM036497 on 1/8/2017.
  */
 public class Utils {
+    public static ArrayList<Counter> counters = new ArrayList<>();
     private static FirebaseDatabase mDatabase;
     private static Typeface noto;
 

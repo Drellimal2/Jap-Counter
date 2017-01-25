@@ -31,7 +31,6 @@ import io.origamicoders.japcounter.ViewHolders.CounterViewHolder;
 public class CountersActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private ArrayList<JapCounter> japCounters = new ArrayList<>();
     private DatabaseReference mDatabase;
 
     @Override
@@ -49,10 +48,9 @@ public class CountersActivity extends AppCompatActivity {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-//        japCounters = getData();
 
         mDatabase = Utils.getDatabase().getReference();
-        final Context a = this;
+//        final Context a = this;
         final Query counterQuery = mDatabase.child("counters");
         FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Counter, CounterViewHolder>(Counter.class,
                 R.layout.counter_list_item, CounterViewHolder.class, counterQuery){
@@ -62,10 +60,9 @@ public class CountersActivity extends AppCompatActivity {
             protected void populateViewHolder(CounterViewHolder viewHolder, Counter model, int position) {
                 final DatabaseReference postRef = getRef(position);
 
-                // Set click listener for the whole post view
                 final String postKey = postRef.getKey();
                 viewHolder.bindToCounter(model, position, postKey);
-                long id = getItemId(position);
+//                long id = getItemId(position);
 
                 setAnimation(viewHolder.mView, position);
 
@@ -134,9 +131,6 @@ public class CountersActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<JapCounter> getData(){
-        return Data.getJapCounters();
-    }
 
 
 

@@ -18,6 +18,7 @@ public class HundredActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ArrayList<JapWord> japnums = new ArrayList<>();
     public static FragmentManager frag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

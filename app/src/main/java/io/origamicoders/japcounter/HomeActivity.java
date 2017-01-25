@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,13 +49,16 @@ public class HomeActivity extends AppCompatActivity {
         };
 
 
-        Button counters = (Button) findViewById(R.id.home_counter_button);
-        Button hundred = (Button) findViewById(R.id.home_hundred_button);
-        Button quiz = (Button) findViewById(R.id.home_quiz_button);
+        TextView counters = (TextView) findViewById(R.id.home_counter_button);
+        TextView hundred = (TextView) findViewById(R.id.home_hundred_button);
+        TextView quiz = (TextView) findViewById(R.id.home_quiz_button);
+//Button counters = (Button) findViewById(R.id.home_counter_button);
+//        Button hundred = (Button) findViewById(R.id.home_hundred_button);
+//        Button quiz = (Button) findViewById(R.id.home_quiz_button);
 
         final Intent counterIntent = new Intent(this, CountersActivity.class);
         final Intent numberIntent = new Intent(this, HundredActivity.class);
-        final Intent quizIntent = new Intent(this,  ScrollingActivity.class);
+        final Intent quizIntent = new Intent(this,  QuizActivity.class);
         Utils.getDatabase();
         counters.setOnClickListener(new View.OnClickListener() {
             @Override

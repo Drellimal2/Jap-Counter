@@ -21,31 +21,44 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <Button
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:text="Counters"
-        android:background="@color/white"
+        android:fontFamily="sans-serif-thin"
         android:gravity="center"
+        android:textSize="20sp"
+        android:background="@color/white"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/home_counter_button"
-        android:layout_margin="15dp"
+        android:layout_marginBottom="1dp"
+        android:padding="15dp"
         />
 
-    <Button
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:text="Numbers"
-        android:background="@color/white"
-        android:id="@+id/home_hundred_button"
         android:gravity="center"
-        android:layout_margin="15dp"/>
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-light"
+        android:background="@color/white"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/home_hundred_button"
+        android:layout_marginBottom="1dp"
+        android:padding="15dp"
+        />
 
-    <Button
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:text="Quiz"
         android:id="@+id/home_quiz_button"
-        android:background="@drawable/quiz_button"
         android:gravity="center"
-        android:layout_margin="15dp"/>
+        android:textSize="20sp"
+        android:background="@color/white"
+        android:layout_marginBottom="1dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="15dp"
+        />
 </LinearLayout>

@@ -50,10 +50,10 @@ public class CounterDetailToTen extends Fragment {
         final String key = getArguments().getString("ITEM_KEY");
         rootView = inflater.inflate(R.layout.fragment_recycler_ads, container, false);
 
-        MobileAds.initialize(rootView.getContext(), "ca-app-pub-3940256099942544~3347511713");
+        /*MobileAds.initialize(rootView.getContext(), "ca-app-pub-3940256099942544~3347511713");
         AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
         final DetailsActivity detail = (DetailsActivity) getActivity();
         RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.gen_recycler_view);
 

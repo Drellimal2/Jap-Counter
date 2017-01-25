@@ -40,13 +40,11 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.ViewHolder
 
         v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.number_list_item, parent, false);
-        // set the view's size, margins, paddings and layout parameters
 
         NumberAdapter.ViewHolder vh = new NumberAdapter.ViewHolder(v);
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(NumberAdapter.ViewHolder holder, int position) {
 
@@ -85,9 +83,8 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.ViewHolder
                     String item = mDataset.get(getLayoutPosition()).english;
                     int i = Integer.parseInt(item) - 1;
                     AppCompatDialogFragment a = NumberDetails.newInstance(i);
-                    HundredActivity hun = (HundredActivity) mView.getContext();
-                    Toast.makeText(mView.getContext(), item, Toast.LENGTH_LONG).show();
-                    FragmentManager  frag = HundredActivity.frag;
+                    FragmentManager  frag = MainActivity.frag;
+//                    FragmentManager  frag = HundredActivity.frag;
                     a.show(frag, "a");
 
                 }

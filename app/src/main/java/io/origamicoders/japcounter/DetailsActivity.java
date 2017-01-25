@@ -26,6 +26,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -67,11 +68,31 @@ public class DetailsActivity extends AppCompatActivity {
         getCounter();
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        final AdView mAdView = (AdView) findViewById(R.id.adView);
+        final AdRequest adRequest = new AdRequest.Builder().build();
         JapCounter a = Data.getJapCounters().get(item_pos);
 //        getSupportActionBar().setTitle(a.name.getKanji() + " - " + a.usesToString());
+        final DatabaseReference connectedRef = Utils.getDatabase().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    mAdView.setVisibility(View.VISIBLE);
+                    mAdView.loadAd(adRequest);
 
+                } else {
+                    mAdView.setVisibility(View.GONE);
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
     }
 
     public Counter getCounter() {
