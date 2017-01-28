@@ -1,23 +1,21 @@
 package io.origamicoders.japcounter;
 
-import android.renderscript.Sampler;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -44,11 +42,17 @@ public class QuizActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        final int num_quest = 30;
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),num_quest);
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         DatabaseReference mDatabase = Utils.getDatabase().getReference();
         Query q = mDatabase.child("counters");
         ValueEventListener v = new ValueEventListener() {
@@ -75,6 +79,9 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "" + Utils.counters.size(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                if(mViewPager.getCurrentItem() < num_quest - 1) {
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                }
             }
         });
 
@@ -129,9 +136,14 @@ public class QuizActivity extends AppCompatActivity {
 
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
+        private int count = -1;
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+        }
+
+        public SectionsPagerAdapter(FragmentManager fm, int count) {
+            super(fm);
+            this.count = count;
         }
 
         @Override
@@ -142,7 +154,11 @@ public class QuizActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            if (count == -1) {
+                return 3;
+            } else{
+                return this.count;
+            }
         }
 
         @Override

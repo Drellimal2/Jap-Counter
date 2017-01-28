@@ -59,7 +59,7 @@ public class CountersFragment extends Fragment {
 
 
         DatabaseReference mDatabase = Utils.getDatabase().getReference();
-        final Query counterQuery = mDatabase.child("counters");
+        final Query counterQuery = mDatabase.child("counters").orderByChild("kana");
         FirebaseRecyclerAdapter mAdapter = new FirebaseRecyclerAdapter<Counter, CounterViewHolder>(Counter.class,
                 R.layout.counter_list_item, CounterViewHolder.class, counterQuery){
 
@@ -71,9 +71,9 @@ public class CountersFragment extends Fragment {
                 final String postKey = postRef.getKey();
                 viewHolder.bindToCounter(model, position, postKey);
 //                long id = getItemId(position);
-
+                if (model.popular) {
                 setAnimation(viewHolder.mView, position);
-
+                }
 
             }
             private int lastPosition = -1;

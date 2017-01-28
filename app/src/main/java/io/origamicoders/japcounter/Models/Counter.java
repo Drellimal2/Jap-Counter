@@ -1,10 +1,9 @@
 package io.origamicoders.japcounter.Models;
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.ArrayList;
 
 /**
- * Created by DM036497 on 1/8/2017.
+ * Created by Dane on 1/8/2017.
  */
 @IgnoreExtraProperties
 public class Counter {

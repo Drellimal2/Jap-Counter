@@ -9,10 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-
 import java.util.ArrayList;
 
 import io.origamicoders.japcounter.Classes.JapCounter;
@@ -41,7 +37,6 @@ public class CounterDetailExamples extends Fragment {
 
         int pos = getArguments().getInt("POS");
         View rootView;
-        JapCounter japCounter = Data.getJapCounters().get(pos);
 
         rootView = inflater.inflate(R.layout.fragment_recycler_ads, container, false);
 
@@ -71,7 +66,7 @@ public class CounterDetailExamples extends Fragment {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        MyAdapter mAdapter = new MyAdapter(japCounter.examples);
+        MyAdapter mAdapter = new MyAdapter(new ArrayList<JapWord>());
         mRecyclerView.setAdapter(mAdapter);
 
         return rootView;

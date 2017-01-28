@@ -2,20 +2,13 @@ package io.origamicoders.japcounter;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
 import io.origamicoders.japcounter.Models.Counter;
 
@@ -38,24 +31,24 @@ public class Utils {
     public static Typeface getFont(Context context){
         if(noto == null){
             noto = Typeface.createFromAsset(context.getApplicationContext().getAssets(),
-                    "fonts/ming.ttf");
+                    "fonts/honokamin.ttf");
         }
         return noto;
     }
 
     private static HashMap<String, Typeface> fontCache = new HashMap<>();
 
-    public static Typeface getTypeface(String fontname, Context context) {
-        Typeface typeface = fontCache.get(fontname);
+    public static Typeface getTypeface(Context context) {
+        Typeface typeface = fontCache.get("honokamin.ttf");
 
         if (typeface == null) {
             try {
-                typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + fontname);
+                typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "honokamin.ttf");
             } catch (Exception e) {
                 return null;
             }
 
-            fontCache.put(fontname, typeface);
+            fontCache.put("honokamin.ttf", typeface);
         }
 
         return typeface;

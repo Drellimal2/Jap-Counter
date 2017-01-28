@@ -107,18 +107,15 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         Fragment fragment = CountersFragment.newInstance();;
-        int position = 0;
 
         switch(id){
             case R.id.nav_all:
                 fragment = CountersFragment.newInstance();
                 tabs.setVisibility(View.GONE);
-                position = 0;
                 break;
             case R.id.nav_nums:
                 fragment = NumbersFragment.newInstance();
                 tabs.setVisibility(View.GONE);
-                position = 4;
                 break;
             case R.id.nav_quiz:
                 fragment = QuizFragment.newInstance();
@@ -128,7 +125,6 @@ public class MainActivity extends AppCompatActivity
             default:
                 fragment =  CountersFragment.newInstance();;
                 tabs.setVisibility(View.VISIBLE);
-                position = 5;
                 break;
 
         }
@@ -136,14 +132,10 @@ public class MainActivity extends AppCompatActivity
         frag.beginTransaction()
                 .replace(R.id.content_main, fragment)
                 .commit();
+//        navigationView.setCheckedItem(id);
+
         navigationView.setCheckedItem(id);
-
-        // Highlight the selected item, update the title, and close the drawer
-//        setTitle(mPlanetTitles[position]);
-
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView.setCheckedItem(id);
-
+//        onNavigationItemSelected(navigationView.getMenu().findItem(id));
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }

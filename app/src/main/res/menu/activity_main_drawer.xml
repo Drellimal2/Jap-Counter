@@ -3,6 +3,27 @@
 
     <group android:checkableBehavior="single">
         <item android:title="Counters">
+
+        <menu>
+            <item
+                android:id="@+id/nav_all"
+                android:icon="@drawable/ic_action_filter"
+                android:title="All" />
+            <item
+                android:id="@+id/nav_fav"
+                android:icon="@drawable/heart_sel"
+                android:title="Favorites" />
+            <item
+                android:id="@+id/nav_pop"
+                android:icon="@mipmap/flame"
+                android:title="Popular" />
+        </menu>
+        </item>
+
+    </group>
+
+    <group android:checkableBehavior="single">
+        <!--<item android:title="Counters">
             <menu>
                 <item
                     android:id="@+id/nav_all"
@@ -18,7 +39,7 @@
                     android:title="Popular" />
             </menu>
         </item>
-        <item
+        --><item
             android:id="@+id/nav_nums"
             android:icon="@drawable/ic_numbers"
             android:title="Numbers" />
@@ -26,14 +47,7 @@
             android:id="@+id/nav_quiz"
             android:icon="@drawable/ic_quiz"
             android:title="Quiz" />
-        <!--<item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />-->
+
     </group>
 
 

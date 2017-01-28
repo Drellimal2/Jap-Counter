@@ -1,7 +1,6 @@
 package io.origamicoders.japcounter.ViewHolders;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
@@ -14,13 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-import io.origamicoders.japcounter.Classes.Header;
 import io.origamicoders.japcounter.DetailsActivity;
 import io.origamicoders.japcounter.Models.Counter;
 import io.origamicoders.japcounter.R;
@@ -62,13 +57,17 @@ public class CounterViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindToCounter(final Counter counter, final int position, final String key){
-        title.setText(counter.kanji);
         kana.setText(counter.kana);
         romaji.setText(counter.romaji);
         uses.setText(counter.uses);
         if(counter.popular){
             hot.setVisibility(View.VISIBLE);
         }
+        if (counter.kanji != null){
+            title.setText(counter.kanji);
+        } /*else{
+            title.setVisibility(View.GONE);
+        }*/
         final Intent a = new Intent(mView.getContext(), DetailsActivity.class);
         final DatabaseReference mDatabase = Utils.getDatabase().getReference();
         final FirebaseUser user = Utils.getCurrentUser();

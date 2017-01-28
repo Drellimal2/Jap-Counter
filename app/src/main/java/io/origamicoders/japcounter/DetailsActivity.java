@@ -71,8 +71,7 @@ public class DetailsActivity extends AppCompatActivity {
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
         final AdView mAdView = (AdView) findViewById(R.id.adView);
         final AdRequest adRequest = new AdRequest.Builder().build();
-        JapCounter a = Data.getJapCounters().get(item_pos);
-//        getSupportActionBar().setTitle(a.name.getKanji() + " - " + a.usesToString());
+
         final DatabaseReference connectedRef = Utils.getDatabase().getReference(".info/connected");
         connectedRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -245,7 +244,7 @@ public class DetailsActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -254,7 +253,7 @@ public class DetailsActivity extends AppCompatActivity {
                 case 0:
                     return "Description";
                 case 1:
-                    return "1 to 10";
+                    return "Samples";
                 case 2:
                     return "Examples";
             }

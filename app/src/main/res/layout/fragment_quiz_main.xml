@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context="io.origamicoders.japcounter.QuizFragment">
     <FrameLayout
         android:layout_width="match_parent"
@@ -14,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="40sp"
-            android:text="Counter Quiz"
+            android:text="@string/counter_quiz"
             android:gravity="center"
             android:layout_gravity="center"
             android:textColor="@color/white"/>
@@ -26,18 +25,70 @@
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:fontFamily="serif"
+            android:gravity="center"
             android:textSize="20sp"
-            android:text="Questions" />
+            android:text="Counter List" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/new_quiz_list"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            tools:listitem="@layout/spinner_simple"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@string/questions" />
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/new_quiz_count"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            tools:listitem="@layout/spinner_simple"
             android:layout_weight="1" />
+
     </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="right"
+
+        android:background="@color/white"
+        >
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:text="Start >"
+            android:textSize="20sp"
+            android:id="@+id/new_quiz_start"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_gravity="right"
+            android:textColor="@color/colorPrimaryDark"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textAlignment="center" />
+    </android.support.v7.widget.Toolbar>
+
 
 
 </LinearLayout>

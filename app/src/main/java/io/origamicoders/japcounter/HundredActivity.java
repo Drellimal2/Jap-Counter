@@ -35,20 +35,14 @@ public class HundredActivity extends AppCompatActivity {
         LinearLayoutManager mLayoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
         japnums = Data.getNumbers();
         NumberAdapter mAdapter = new NumberAdapter(japnums);
         mRecyclerView.setAdapter(mAdapter);
         frag = getSupportFragmentManager();
-//        // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
 
-        // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
 
     }
 
-    public static FragmentManager getFrag(){
-        return frag;
     }
-}

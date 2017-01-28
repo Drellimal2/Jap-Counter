@@ -108,8 +108,7 @@ public class NumberDetails extends AppCompatDialogFragment {
         kana.setText(word.getKana());
         num.setText(word.english);
         romaji.setText(word.getRomaji());
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
+
         builder.setView(rootView);
         return builder.create();
     }

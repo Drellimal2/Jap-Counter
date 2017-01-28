@@ -1,14 +1,9 @@
 package io.origamicoders.japcounter.ViewHolders;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import io.origamicoders.japcounter.DetailsActivity;
-import io.origamicoders.japcounter.Models.Counter;
 import io.origamicoders.japcounter.Models.Example;
 import io.origamicoders.japcounter.R;
 
