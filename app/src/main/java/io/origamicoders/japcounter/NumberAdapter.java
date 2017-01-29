@@ -78,7 +78,6 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.ViewHolder
                     int i = Integer.parseInt(item) - 1;
                     AppCompatDialogFragment a = NumberDetails.newInstance(i);
                     FragmentManager  frag = MainActivity.frag;
-//                    FragmentManager  frag = HundredActivity.frag;
                     a.show(frag, "a");
 
                 }

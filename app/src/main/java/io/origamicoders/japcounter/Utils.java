@@ -19,7 +19,7 @@ public class Utils {
     public static ArrayList<Counter> counters = new ArrayList<>();
     private static FirebaseDatabase mDatabase;
     private static Typeface noto;
-
+    public static boolean done = false;
     public static FirebaseDatabase getDatabase() {
         if (mDatabase == null) {
             mDatabase = FirebaseDatabase.getInstance();

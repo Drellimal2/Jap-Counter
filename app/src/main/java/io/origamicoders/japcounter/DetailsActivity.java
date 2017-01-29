@@ -149,71 +149,6 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber, int pos) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            args.putInt("POS", pos);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            int a = getArguments().getInt(ARG_SECTION_NUMBER);
-            int pos = getArguments().getInt("POS");
-            View rootView;
-            switch (a - 1) {
-                case 0:
-                    rootView = inflater.inflate(R.layout.fragment_details_desc, container, false);
-
-                    MobileAds.initialize(rootView.getContext(), "ca-app-pub-3940256099942544~3347511713");
-                    AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
-                    AdRequest adRequest = new AdRequest.Builder().build();
-                    mAdView.loadAd(adRequest);
-                    JapCounter japCounter = Data.getJapCounters().get(pos);
-                    TextView kanji = (TextView) rootView.findViewById(R.id.counter_details_desc_kanji);
-                    TextView kana = (TextView) rootView.findViewById(R.id.counter_details_desc_kana);
-                    TextView uses = (TextView) rootView.findViewById(R.id.counter_details_desc_uses);
-                    TextView romaji = (TextView) rootView.findViewById(R.id.counter_details_desc_romaji);
-
-                    kanji.setText(japCounter.name.getKanji());
-                    kana.setText(japCounter.name.getKana());
-                    romaji.setText(japCounter.name.getRomaji());
-                    uses.setText(japCounter.usesToList());
-                    break;
-                case 1:
-                    rootView = inflater.inflate(R.layout.fragment_details_samples, container, false);
-                    break;
-                case 2:
-                    rootView = inflater.inflate(R.layout.fragment_details_examples, container, false);
-                    break;
-                default:
-                    rootView = inflater.inflate(R.layout.fragment_details_desc, container, false);
-                    break;
-
-            }
-
-            return rootView;
-        }
-    }
-
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         int pos;
 
@@ -237,7 +172,7 @@ public class DetailsActivity extends AppCompatActivity {
                 case 2:
                     return CounterDetailExamples.newInstance(2, this.pos);
             }
-            return PlaceholderFragment.newInstance(position + 1, this.pos);
+            return CounterDetailDesc.newInstance(key, this.pos);
 
         }
 

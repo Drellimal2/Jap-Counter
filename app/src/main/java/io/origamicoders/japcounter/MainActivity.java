@@ -22,6 +22,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import io.origamicoders.japcounter.Models.Counter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,6 +55,8 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabs = (TabLayout) findViewById(R.id.tabs);
@@ -132,10 +141,8 @@ public class MainActivity extends AppCompatActivity
         frag.beginTransaction()
                 .replace(R.id.content_main, fragment)
                 .commit();
-//        navigationView.setCheckedItem(id);
 
         navigationView.setCheckedItem(id);
-//        onNavigationItemSelected(navigationView.getMenu().findItem(id));
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }

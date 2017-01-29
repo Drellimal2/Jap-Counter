@@ -72,7 +72,7 @@ public class CountersFragment extends Fragment {
                 viewHolder.bindToCounter(model, position, postKey);
 //                long id = getItemId(position);
                 if (model.popular) {
-                setAnimation(viewHolder.mView, position);
+                    setAnimation(viewHolder.mView, position);
                 }
 
             }

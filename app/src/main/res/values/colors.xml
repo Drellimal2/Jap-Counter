@@ -12,4 +12,7 @@
     <color name="grey">#949494</color>
     <color name="grey_light">#e4e4e4</color>
 
+    <color name="wrong_red">#d32f2f</color>
+    <color name="right_green">#4caf50</color>
+
 </resources>

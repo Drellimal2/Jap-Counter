@@ -20,6 +20,14 @@ public class Quiz {
 
     }
 
+    public Question getQuestion(int index){
+        return this.questions.get(index);
+
+    }
+    public Quiz(int NumQuestions){
+
+    }
+
 
 
 
